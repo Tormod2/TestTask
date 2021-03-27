@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -14,72 +16,54 @@ public class MovementScript : MonoBehaviour
     
     public Transform tr;
     public LineRenderer lr;
-    private float _time;
-    private List<Vector3> _trajectory;
-    private bool _loop;
-    private string _bodyJsonString;
+    private Data _data;
 
-    private IEnumerator Start()
+    private void Start()
     {
-        string token = "sl.Att8NwrzTVNSFlRuBryu0s9qUBnr1kti34CPlURfnhtUaXbcGfp4FeEnFYtQyNPZhusqgKDvvIOf_NMVmFaZQ1xCaJKGUg1iE2wWCQ5rt_w0Em5vznFIRxCCFzUgotPZndoUnoU";
+        var path = Path.Combine(Application.dataPath, "Data.json");       
+        WebClient webClient = new WebClient();
+        if (!File.Exists(path))
+        {
+            webClient.DownloadFile("https://drive.google.com/uc?export=download&id=1YwwjBNPAs01cMiDj6SZPE20KP8n3QWc1",
+                Path.Combine(Application.dataPath, "Data.json"));
+        }
+        string file = File.ReadAllText(path);
+
         Sequence mySequence = DOTween.Sequence();
-
+        List<float> distances = new List<float>();
+        float sumDistance = 0f;               
+        _data = JsonConvert.DeserializeObject<Data>(file);
         
-
-        //Dictionary<string, string> postHeader = new Dictionary<string, string>();
-        //postHeader.Add("Authorization", "Bearer " + token);
-        //postHeader.Add("Dropbox-API-Arg", "{\"path\": \"/provaupload.json\"}");
-        //postHeader.Add("Content-Type", "");
-        //using (UnityWebRequest request = UnityWebRequest.Get("https://www.dropbox.com/sh/2bym9ochyew91e5/AAAeZgiDflL1z_De1-mEZ9qTa?dl=0/Data.json"))
-        ////"https://content.dropboxapi.com/2/files/download", null, postHeader))
-        //{
-        //    //request.SetRequestHeader("Authorization", "Bearer " + token);
-            
-        //    yield return request.SendWebRequest();
-        //    if (request.error != null)
-        //    {
-        //        Debug.Log(request.error + " " + request.error);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("Success! " + request.downloadHandler.text);
-        //    }
-        //}
-        yield return null;
-
-
-
-        //lr.positionCount = _trajectory.Count;
-
-        //await Task.Run( GetDropBoxFile);
-        //foreach (var t in _trajectory)
-        //{
-        //    mySequence.Append(transform.DOMove(t, _time / _trajectory.Count));
-        //    lr.SetPosition(_trajectory.IndexOf(t), t);                      
-        //}
-
-        //DOTween.Play(mySequence);
-
+        tr.position = _data.Trajectory[0];
+        if (_data.Loop == true)
+        {
+            _data.Trajectory.Add(_data.Trajectory[0]);
+            mySequence.SetLoops(-1);
+                    
+        }       
+        for (int i = 0; i < _data.Trajectory.Count - 1; i++)
+        {
+            distances.Add(Vector3.Distance(_data.Trajectory[i], _data.Trajectory[i + 1]));
+            sumDistance += Vector3.Distance(_data.Trajectory[i], _data.Trajectory[i + 1]);
+        }
+        lr.positionCount = _data.Trajectory.Count;
+        lr.SetPositions(_data.Trajectory.ToArray());
+        _data.Trajectory.RemoveAt(0);
+        foreach (var t in _data.Trajectory)
+        {
+            mySequence.Append(transform.DOMove(t, _data.Time*distances[_data.Trajectory.IndexOf(t)] / sumDistance).SetSpeedBased().SetEase(Ease.Linear));
+            lr.SetPosition(_data.Trajectory.IndexOf(t)+1, t);
+        }        
+        DOTween.Play(mySequence);
     }
-
-
-    //static async Task GetDropBoxFile()
-    //{
-    //    string token = "sl.Att8NwrzTVNSFlRuBryu0s9qUBnr1kti34CPlURfnhtUaXbcGfp4FeEnFYtQyNPZhusqgKDvvIOf_NMVmFaZQ1xCaJKGUg1iE2wWCQ5rt_w0Em5vznFIRxCCFzUgotPZndoUnoU";
-    //    using (var dbx = new DropboxClient(token))
-    //    {
-    //        using (var response = await dbx.Files.DownloadAsync("Test" + "/" + "Data.json"))
-    //        {
-    //            Debug.Log(await response.GetContentAsStringAsync());
-    //        }
-
-
-    //    }
-    //}
-    
-
-
-
 }
+
+public class Data
+{
+    public float Time;
+    public List<Vector3> Trajectory;
+    public bool Loop;
+}
+
 
 

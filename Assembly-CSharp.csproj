@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraMvScript.cs" />
     <Compile Include="Assets\Scripts\MovementScript.cs" />
+    <Compile Include="Assets\Scripts\RandomMvScript.cs" />
     <Reference Include="UnityEngine">
       <HintPath>D:/Unity/2019.4.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -242,14 +243,14 @@
     <Reference Include="UnityEditor">
       <HintPath>D:/Unity/2019.4.15f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="DOTween">
-      <HintPath>C:/Users/vovad/Desktop/Unity Stuff/TestTask/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
-    </Reference>
     <Reference Include="Dropbox.Api">
       <HintPath>C:/Users/vovad/Desktop/Unity Stuff/TestTask/Assets/Plugins/Dropbox.Api.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:/Users/vovad/Desktop/Unity Stuff/TestTask/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>C:/Users/vovad/Desktop/Unity Stuff/TestTask/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:/Unity/2019.4.15f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -629,9 +630,6 @@
       <Project>{A20B3A17-6557-4810-2EE6-8E093D2D526A}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

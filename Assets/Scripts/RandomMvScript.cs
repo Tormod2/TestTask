@@ -18,6 +18,7 @@ public class RandomMvScript : MonoBehaviour
         foreach (var g in GeneratePath())
         {
             _trajectory.Add(g);
+            Debug.Log(g.x+" "+" "+g.y+" "+g.z);
             
         }
         lr.positionCount = _trajectory.Count;
@@ -42,7 +43,7 @@ public class RandomMvScript : MonoBehaviour
 
         for(int i = 0; i < DotAmount; i++)
         {
-            path.Add(new Vector3(UnityEngine.Random.Range(-100f, 100f), 2, UnityEngine.Random.Range(-100f, 100f)));
+            path.Add(new Vector3(UnityEngine.Random.Range(-200f, 100f), 2, UnityEngine.Random.Range(-500f, -200f)));
         }
         IEnumerable<Vector3> sorted = path.OrderBy(v => v.x).ThenBy(v => v.z);
 

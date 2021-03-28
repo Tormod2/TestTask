@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraMvScript.cs" />
+    <Compile Include="Assets\Scripts\Domain.cs" />
+    <Compile Include="Assets\Scripts\DownloadScript.cs" />
     <Compile Include="Assets\Scripts\MovementScript.cs" />
     <Compile Include="Assets\Scripts\RandomMvScript.cs" />
     <Reference Include="UnityEngine">

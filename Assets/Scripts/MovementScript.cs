@@ -20,21 +20,12 @@ public class MovementScript : MonoBehaviour
 
     private void Start()
     {
-        var path = Path.Combine(Application.dataPath, "Data.json");       
-        WebClient webClient = new WebClient();
-        if (!File.Exists(path))
-        {
-            webClient.DownloadFile("https://drive.google.com/uc?export=download&id=1YwwjBNPAs01cMiDj6SZPE20KP8n3QWc1",
-                Path.Combine(Application.dataPath, "Data.json"));
-        }
-        string file = File.ReadAllText(path);
-
+        _data = DownloadScript.GetData();
         Sequence mySequence = DOTween.Sequence();
         List<float> distances = new List<float>();
-        float sumDistance = 0f;               
-        _data = JsonConvert.DeserializeObject<Data>(file);
-        
+        float sumDistance = 0f;                      
         tr.position = _data.Trajectory[0];
+
         if (_data.Loop == true)
         {
             _data.Trajectory.Add(_data.Trajectory[0]);
@@ -58,12 +49,7 @@ public class MovementScript : MonoBehaviour
     }
 }
 
-public class Data
-{
-    public float Time;
-    public List<Vector3> Trajectory;
-    public bool Loop;
-}
+
 
 
 

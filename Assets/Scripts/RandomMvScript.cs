@@ -17,9 +17,7 @@ public class RandomMvScript : MonoBehaviour
 
         foreach (var g in GeneratePath())
         {
-            _trajectory.Add(g);
-            Debug.Log(g.x+" "+" "+g.y+" "+g.z);
-            
+            _trajectory.Add(g);            
         }
         lr.positionCount = _trajectory.Count;
         tr.position = _trajectory[0];

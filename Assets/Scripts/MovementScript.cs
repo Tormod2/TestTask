@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 public class MovementScript : MonoBehaviour
@@ -17,6 +18,7 @@ public class MovementScript : MonoBehaviour
     public Transform tr;
     public LineRenderer lr;
     private Data _data;
+    public UnityEvent loopends;
 
     private void Start()
     {
@@ -25,12 +27,14 @@ public class MovementScript : MonoBehaviour
         List<float> distances = new List<float>();
         float sumDistance = 0f;                      
         tr.position = _data.Trajectory[0];
-
+        
         if (_data.Loop == true)
         {
-            _data.Trajectory.Add(_data.Trajectory[0]);
-            mySequence.SetLoops(-1);
-                    
+            _data.Trajectory.Add(_data.Trajectory[0]);           
+            mySequence.OnComplete(() => {
+                loopends?.Invoke();
+                mySequence.Restart(); 
+                });
         }       
         for (int i = 0; i < _data.Trajectory.Count - 1; i++)
         {

@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\DownloadScript.cs" />
     <Compile Include="Assets\Scripts\MovementScript.cs" />
     <Compile Include="Assets\Scripts\RandomMvScript.cs" />
+    <Compile Include="Assets\Scripts\TimeScript.cs" />
     <Reference Include="UnityEngine">
       <HintPath>D:/Unity/2019.4.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class TimeScript : MonoBehaviour
 {   
-    public Text currentLap;
-    public Text lastLap;    
+    public TMP_Text currentLap;
+    public TMP_Text lastLap;    
     private float _time;   
 
     void Update()

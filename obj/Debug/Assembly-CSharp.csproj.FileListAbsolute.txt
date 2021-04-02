@@ -270,3 +270,8 @@ C:\Users\vovad\Desktop\Unity Stuff\TestTask\obj\Debug\Assembly-CSharp.csproj.Cor
 C:\Users\vovad\Desktop\Unity Stuff\TestTask\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\vovad\Desktop\Unity Stuff\TestTask\obj\Debug\Assembly-CSharp.dll
 C:\Users\vovad\Desktop\Unity Stuff\TestTask\obj\Debug\Assembly-CSharp.pdb
+C:\Users\vovad\Desktop\Unity Stuff\TestTask\Temp\bin\Debug\DOTween.dll
+C:\Users\vovad\Desktop\Unity Stuff\TestTask\Temp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\vovad\Desktop\Unity Stuff\TestTask\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
+C:\Users\vovad\Desktop\Unity Stuff\TestTask\Temp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\vovad\Desktop\Unity Stuff\TestTask\Temp\bin\Debug\DOTween.xml

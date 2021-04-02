@@ -9,26 +9,34 @@ public class RandomMvScript : MonoBehaviour
 {
     public Transform tr;
     public LineRenderer lr;
+    public LineRenderer bezier;
 
     void Start()
     {
         Sequence mySequence = DOTween.Sequence();
-        List<Vector3> _trajectory = new List<Vector3>();
-
+        List<Vector3> Trajectory = new List<Vector3>();
+        
         foreach (var g in GeneratePath())
         {
-            _trajectory.Add(g);            
-        }
-        lr.positionCount = _trajectory.Count;
-        tr.position = _trajectory[0];
-        
-        foreach (var t in _trajectory)
-        {
-            mySequence.Append(transform.DOMove(t, 0.8f).SetSpeedBased().SetEase(Ease.Linear));
-            lr.SetPosition(_trajectory.IndexOf(t), t);
+            Trajectory.Add(g);            
         }
         
+        lr.positionCount = Trajectory.Count;
+        tr.position = Trajectory[0];
+        
+        List<Vector3> BezierTrajectory = BezierCurve.BezierDraw(0.08f, Trajectory);
+        bezier.positionCount = BezierTrajectory.Count;
 
+        for (int i = 0; i < BezierTrajectory.Count; i++)
+        {
+            Vector3 t = BezierTrajectory[i];
+            mySequence.Append(transform.DOMove(t, 0.2f).SetSpeedBased().SetEase(Ease.Linear));
+            bezier.SetPosition(i, t);
+        }
+        foreach (var t in Trajectory)
+        {           
+            lr.SetPosition(Trajectory.IndexOf(t), t);
+        }        
         DOTween.Play(mySequence);
 
     }
@@ -41,7 +49,7 @@ public class RandomMvScript : MonoBehaviour
 
         for(int i = 0; i < DotAmount; i++)
         {
-            path.Add(new Vector3(UnityEngine.Random.Range(-200f, 100f), 2, UnityEngine.Random.Range(-500f, -200f)));
+            path.Add(new Vector3(UnityEngine.Random.Range(-100f, 100f), 2, UnityEngine.Random.Range(-400f, -200f)));
         }
         IEnumerable<Vector3> sorted = path.OrderBy(v => v.x).ThenBy(v => v.z);
 

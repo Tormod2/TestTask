@@ -12,23 +12,33 @@ public class MovementScript : MonoBehaviour
     public LineRenderer lr;
     private Data _data;
     public UnityEvent loopends;
+    public UnityEvent endOfTheLine;
 
     private void Start()
     {
         _data = DownloadScript.GetData();
+    }
+
+    public void StartMovement()
+    {       
         Sequence mySequence = DOTween.Sequence();
         List<float> distances = new List<float>();
-        float sumDistance = 0f;                      
+        float sumDistance = 0f;
         tr.position = _data.Trajectory[0];
-        
         if (_data.Loop == true)
         {
-            _data.Trajectory.Add(_data.Trajectory[0]);           
+            _data.Trajectory.Add(_data.Trajectory[0]);
             mySequence.OnComplete(() => {
                 loopends?.Invoke();
-                mySequence.Restart(); 
-                });
-        }       
+                mySequence.Restart();
+            });
+        }
+        else
+        {
+            mySequence.OnComplete(() => {
+                endOfTheLine?.Invoke();
+            });
+        }
         for (int i = 0; i < _data.Trajectory.Count - 1; i++)
         {
             distances.Add(Vector3.Distance(_data.Trajectory[i], _data.Trajectory[i + 1]));
@@ -39,9 +49,9 @@ public class MovementScript : MonoBehaviour
         _data.Trajectory.RemoveAt(0);
         foreach (var t in _data.Trajectory)
         {
-            mySequence.Append(transform.DOMove(t, _data.Time*distances[_data.Trajectory.IndexOf(t)] / sumDistance).SetSpeedBased().SetEase(Ease.Linear));
-            lr.SetPosition(_data.Trajectory.IndexOf(t)+1, t);
-        }        
+            mySequence.Append(transform.DOMove(t, _data.Time * distances[_data.Trajectory.IndexOf(t)] / sumDistance).SetSpeedBased().SetEase(Ease.Linear));
+            lr.SetPosition(_data.Trajectory.IndexOf(t) + 1, t);
+        }
         DOTween.Play(mySequence);
     }
 }

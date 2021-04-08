@@ -65,11 +65,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BezierCurve.cs" />
-    <Compile Include="Assets\Scripts\CameraMvScript.cs" />
+    <Compile Include="Assets\Scripts\CameraMovementScript.cs" />
     <Compile Include="Assets\Scripts\Domain.cs" />
     <Compile Include="Assets\Scripts\DownloadScript.cs" />
+    <Compile Include="Assets\Scripts\DrawScript.cs" />
+    <Compile Include="Assets\Scripts\GenerationMethods.cs" />
     <Compile Include="Assets\Scripts\MovementScript.cs" />
-    <Compile Include="Assets\Scripts\RandomMvScript.cs" />
+    <Compile Include="Assets\Scripts\RandomMovementScript.cs" />
     <Compile Include="Assets\Scripts\TimeScript.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />

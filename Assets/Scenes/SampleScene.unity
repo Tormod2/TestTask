@@ -167,9 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ad5174c6f53ad4c8bcabddc3d48229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tr: {fileID: 39964791}
-  lr: {fileID: 2029337511}
-  bezier: {fileID: 2020817743}
+  objectTransform: {fileID: 39964791}
+  originalLine: {fileID: 2029337511}
+  bezierLine: {fileID: 2020817743}
+  time: 15
 --- !u!135 &39964795
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -923,8 +924,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7cbceb07ad1a6479b1e98d2ffbb80e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tr: {fileID: 808462250}
-  lr: {fileID: 1040491353}
+  objectTransform: {fileID: 808462250}
+  line: {fileID: 1040491353}
   loopends:
     m_PersistentCalls:
       m_Calls:
@@ -1281,7 +1282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 229040fff6f4caa4a93b68c8d2c9f92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 808462250}
+  objectTransform: {fileID: 0}
   offset: {x: 0, y: 100, z: 0}
 --- !u!1 &1040491352
 GameObject:
@@ -1571,7 +1572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 229040fff6f4caa4a93b68c8d2c9f92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 39964791}
+  objectTransform: {fileID: 39964791}
   offset: {x: 0, y: 160, z: 0}
 --- !u!81 &1317811625
 AudioListener:

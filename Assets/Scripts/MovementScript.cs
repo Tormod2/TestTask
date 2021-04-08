@@ -1,58 +1,53 @@
 ﻿using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class MovementScript : MonoBehaviour
-{
-    
-    public Transform tr;
-    public LineRenderer lr;
-    private Data _data;
+{   
+    public Transform objectTransform;
+    public LineRenderer line;   
     public UnityEvent loopends;
     public UnityEvent endOfTheLine;
-
+    private Data _data;
+    
+    // Gets data at application launch     
     private void Start()
     {
         _data = DownloadScript.GetData();
     }
 
+    /// <summary>
+    /// Defines movement trajectory for the object based on a loaded data
+    /// </summary>
     public void StartMovement()
-    {       
-        Sequence mySequence = DOTween.Sequence();
-        List<float> distances = new List<float>();
-        float sumDistance = 0f;
-        tr.position = _data.Trajectory[0];
+    {
+        var startPoint = _data.Trajectory[0];
+
+        //Setting the starting position of the ball to the first point of trajectory
+        objectTransform.position = startPoint;
+
+        if(_data.Loop == true)
+        {
+            _data.Trajectory.Add(startPoint);
+        }
+        DrawScript.DrawLine(_data.Trajectory, line);
+        var sequence = GenerationMethods.GenerateSequence(_data.Trajectory, objectTransform, _data.Time);
+
         if (_data.Loop == true)
         {
-            _data.Trajectory.Add(_data.Trajectory[0]);
-            mySequence.OnComplete(() => {
+            sequence.OnComplete(() => {
                 loopends?.Invoke();
-                mySequence.Restart();
+                sequence.Restart();
             });
         }
         else
         {
-            mySequence.OnComplete(() => {
+            sequence.OnComplete(() => {
                 endOfTheLine?.Invoke();
             });
         }
-        for (int i = 0; i < _data.Trajectory.Count - 1; i++)
-        {
-            distances.Add(Vector3.Distance(_data.Trajectory[i], _data.Trajectory[i + 1]));
-            sumDistance += Vector3.Distance(_data.Trajectory[i], _data.Trajectory[i + 1]);
-        }
-        lr.positionCount = _data.Trajectory.Count;
-        lr.SetPositions(_data.Trajectory.ToArray());
-        _data.Trajectory.RemoveAt(0);
-        foreach (var t in _data.Trajectory)
-        {
-            mySequence.Append(transform.DOMove(t, _data.Time * distances[_data.Trajectory.IndexOf(t)] / sumDistance).SetSpeedBased().SetEase(Ease.Linear));
-            lr.SetPosition(_data.Trajectory.IndexOf(t) + 1, t);
-        }
-        DOTween.Play(mySequence);
+
+        DOTween.Play(sequence);
     }
 }
 

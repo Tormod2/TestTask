@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Timers;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 
 public class TimeScript : MonoBehaviour
@@ -13,21 +10,25 @@ public class TimeScript : MonoBehaviour
     private float _time;
     private bool _isPressed;
 
-    void Update()
+    private void Update()
     {
         if (_isPressed)
         {
             _time += Time.deltaTime;
-            currentLap.text = $"Текущее время: {Mathf.FloorToInt(_time % 60)}";           
+            currentLap.text = $"Текущее время: {GetSeconds()}";           
         }
     }
 
     public void Refresh()
     {
-        lastLap.text = "Прошлый круг: " + currentLap.text.Remove(0, 14);
+        lastLap.text = $"Прошлый круг: {GetSeconds()}";
         _time = 0f;
     }
 
+    private int GetSeconds()
+    {
+        return Mathf.FloorToInt(_time % 60);
+    }
     public void CompleteLine()
     {
         _isPressed = false;

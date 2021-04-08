@@ -58,7 +58,7 @@ public static class GenerationMethods
             sumDistance += Vector3.Distance(trajectory[i], trajectory[i + 1]);
         }
 
-        //removing the first point from the trajectory here, because
+        //Removing the first point from the trajectory here, because
         //the ball is already there, but we needed that point to calculate the distance of the first movement
         trajectory.RemoveAt(0);
     }

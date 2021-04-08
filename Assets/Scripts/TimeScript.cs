@@ -19,6 +19,7 @@ public class TimeScript : MonoBehaviour
         }
     }
 
+    //Resets timer to zero and returns the last lap time
     public void Refresh()
     {
         lastLap.text = $"Прошлый круг: {GetSeconds()}";
